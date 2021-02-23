@@ -1,4 +1,5 @@
 ﻿using SalesTaxProject.Business;
+using SalesTaxProject.Exceptions;
 using SalesTaxProject.Model;
 using SalesTaxProject.Utils;
 using System;
@@ -14,30 +15,26 @@ namespace SalesTaxProject
             int numOfItems = Int32.Parse(Console.ReadLine());
             Console.WriteLine("Enter the items line by line...");
             List<string> rawListOfitems = Formatters.ReadInput(numOfItems);
-            List<Item> finalItems = new List<Item>();
-            foreach(string rawItem in rawListOfitems)
+            try
             {
-                var descriptionCostArray = rawItem.Split(" at ");
-                var shelfPrice = Decimal.Parse(descriptionCostArray[1]);
-                var itemDescription = descriptionCostArray[0];
-                finalItems.Add(new Item
-                {
-                    Description = itemDescription,
-                    ShelfPrice = shelfPrice,
-                    isExempted = Helper.IsExempted(itemDescription),
-                    isImported = Helper.IsImported(itemDescription),
-                    Tax = 0.00m,
-                    Cost = 0.00m,
-                });
+                List<Item> finalItems = Evaluaters.ProcessRawItems(rawListOfitems);
+                List<Item> costEvaluatedItems = Evaluaters.EvaluateTaxAndCosts(finalItems);
+                decimal totalTax = Evaluaters.CalculateSalesTax(finalItems);
+                decimal totalCost = Evaluaters.CalculateTotalCost(finalItems);
+                Formatters.PrintReciept(costEvaluatedItems, totalCost, totalTax);
             }
-            foreach(Item item in finalItems)
+            catch(CostMissingException exception)
             {
-                item.Tax = Evaluaters.CalculateTaxForItem(item);
-                item.Cost = Evaluaters.CalculateCostForItem(item);
+                Console.WriteLine(exception.ToString());
             }
-            decimal totalTax = Evaluaters.CalculateSalesTax(finalItems);
-            decimal totalCost = Evaluaters.CalculateTotalCost(finalItems);
-            Formatters.PrintReciept(finalItems, totalCost, totalTax);
+            catch(ShelfPriceNegetiveException exception)
+            {
+                Console.WriteLine(exception.ToString());
+            }
+            catch(ImportedMissingException exception)
+            {
+                Console.WriteLine(exception.ToString());
+            }
         }
     }
 }

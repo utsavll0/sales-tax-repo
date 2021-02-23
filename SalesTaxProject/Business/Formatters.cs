@@ -1,4 +1,5 @@
-﻿using SalesTaxProject.Model;
+﻿using SalesTaxProject.Exceptions;
+using SalesTaxProject.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +21,15 @@ namespace SalesTaxProject.Business
         {
             foreach(Item item in listOfItems)
             {
-                string description = item.isImported ? Evaluaters.GetFormattedDescription(item.Description) : item.Description;
+                string description = "";
+                try
+                {
+                    description = item.isImported ? Evaluaters.GetFormattedDescription(item.Description) : item.Description;
+                }
+                catch(ImportedMissingException exception)
+                {
+                    throw new ImportedMissingException(exception.ToString());
+                }
                 Console.WriteLine($"{description} : {item.Cost}");
             }
             Console.WriteLine($"Sales Taxes: {salesTax}");
