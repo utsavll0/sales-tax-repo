@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SalesTaxProject.Business;
+using SalesTaxProject.Exceptions;
 using SalesTaxProject.Model;
 using System;
 using System.Collections.Generic;
@@ -38,9 +39,7 @@ namespace EvaluatorTests.SalesTaxTest
         public void FormatDescriptionTest4()
         {
             string description = "3 pieces of chalk";
-            string expected = "3 pieces of chalk";
-            string actual = Evaluaters.GetFormattedDescription(description);
-            Assert.AreEqual(expected, actual);
+            Assert.ThrowsException<ImportedMissingException>(()=>Evaluaters.GetFormattedDescription(description));
         }
         [TestMethod]
         public void FormatDescriptionTest5()
