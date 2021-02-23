@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SalesTaxProject.Model
 {
-    class Item
+    public class Item
     {
         public string Description { get; set; }
         public Decimal ShelfPrice { get; set; }

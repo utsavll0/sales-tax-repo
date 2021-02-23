@@ -6,18 +6,18 @@ using System.Text;
 
 namespace SalesTaxProject.Business
 {
-    class Evaluaters
+    public class Evaluaters
     {
         public static decimal CalculateSalesTax(List<Item> listOfItems)
         {
             decimal totalSalesTax = listOfItems.Sum(x => x.Tax);
-            return Formatters.RoundDecimal(totalSalesTax);
+            return totalSalesTax;
         } 
 
         public static decimal CalculateTotalCost(List<Item> listOfItems)
         {
             decimal totalCost = listOfItems.Sum(x => x.Cost);
-            return Formatters.RoundDecimal(totalCost);
+            return totalCost;
         }
 
         public static decimal CalculateTaxForItem(Item item)
@@ -45,6 +45,28 @@ namespace SalesTaxProject.Business
         public static decimal CalculateCostForItem(Item item)
         {
             return item.Tax + item.ShelfPrice;
+        }
+
+        public static string GetFormattedDescription(string description)
+        {
+            string formattedDescription = "";
+            List<string> splitDescription = description.Split().ToList<string>();
+            try
+            {
+                string importedString = splitDescription.Single(item => item.ToLower().Equals("imported"));
+                splitDescription.Remove(importedString);
+                formattedDescription = splitDescription[0] + " imported";
+                for(int i = 1; i < splitDescription.Count; i++)
+                {
+                    formattedDescription = formattedDescription + $" {splitDescription[i]}";
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine($"There was no imported in {description}.");
+                formattedDescription = description;
+            }
+            return formattedDescription;
         }
     }
 }

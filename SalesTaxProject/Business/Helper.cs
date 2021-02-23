@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SalesTaxProject.Utils
 {
-    class Helper
+    public class Helper
     {
-        private static HashSet<string> ExemptedSet = new HashSet<string> { "chocolate", "book", "food", "pill", "medicine", "chips" };
+        private static HashSet<string> ExemptedSet = new HashSet<string> { "chocolate", "book", "food", "pill", "medicine", "chips", "vegetables", "fish", "mango", "apple" };
         public static bool IsExempted(string ItemDescription)
         {
             return ExemptedSet.Any(s => ItemDescription.Contains(s));
