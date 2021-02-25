@@ -7,7 +7,7 @@ using SalesTaxProject.Model;
 namespace SalesTaxTest.SystemTest
 {
     [TestClass]
-    public class EndtoEnd
+    public class EndtoEndTest
     {
         [TestMethod]
         public void Test1()

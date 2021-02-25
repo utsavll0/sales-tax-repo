@@ -8,7 +8,7 @@ using System.Text;
 
 namespace SalesTaxProject.Model
 {
-    public class Receipt
+    public class Receipt : IReceipt
     {
         public List<Item> items;
         decimal totalCost;
