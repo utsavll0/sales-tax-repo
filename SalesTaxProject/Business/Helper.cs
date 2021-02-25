@@ -19,7 +19,7 @@ namespace SalesTaxProject.Utils
         }
         public static decimal RoundDecimal(decimal number)
         {
-            return Math.Round(number / 0.05m, MidpointRounding.AwayFromZero) * 0.05m;
+            return Math.Round(number / 0.05m, MidpointRounding.ToPositiveInfinity) * 0.05m;
         }
     }
 }
