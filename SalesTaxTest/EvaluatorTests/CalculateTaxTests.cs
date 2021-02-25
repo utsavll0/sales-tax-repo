@@ -14,41 +14,46 @@ namespace EvaluatorTests.SalesTaxTest
         [TestMethod]
         public void CalculateTaxTest1()
         {
-            Item sampleItem = new Item() { ShelfPrice = 47.50m, isImported = true, isExempted = false };
+            decimal shelfPrice = 47.50m; bool isImported = true; bool isExempted = false;
             decimal expected = 7.15m;
-            decimal actual = Evaluaters.CalculateTaxForItem(sampleItem);
+            Evaluater evaluater = new Evaluater();
+            decimal actual = evaluater.CalculateTaxForItem(shelfPrice, isImported, isExempted);
             Assert.AreEqual(expected, actual, "The actual calculated tax and expected tax are not equal");
 
         }
         [TestMethod]
         public void CalculateTaxTest2()
         {
-            Item sampleItem = new Item() { ShelfPrice = 12.25m, isImported = false, isExempted = true };
+            decimal shelfPrice = 12.25m; bool isImported = false; bool isExempted = true;
             decimal expected = 0.00m;
-            decimal actual = Evaluaters.CalculateTaxForItem(sampleItem);
+            Evaluater evaluater = new Evaluater();
+            decimal actual = evaluater.CalculateTaxForItem(shelfPrice, isImported, isExempted);
             Assert.AreEqual(expected, actual, "The actual calculated tax and expected tax are not equal");
         }
         [TestMethod]
         public void CalculateTaxTest3()
         {
-            Item sampleItem = new Item() { ShelfPrice = 97.99m, isImported = true, isExempted = true };
+            decimal shelfPrice = 97.99m; bool isImported = true; bool isExempted = true;
             decimal expected = 4.90m;
-            decimal actual = Evaluaters.CalculateTaxForItem(sampleItem);
+            Evaluater evaluater = new Evaluater();
+            decimal actual = evaluater.CalculateTaxForItem(shelfPrice, isImported, isExempted);
             Assert.AreEqual(expected, actual, "The actual calculated tax and expected tax are not equal");
         }
         [TestMethod]
         public void CalculateTaxTest4()
         {
-            Item sampleItem = new Item() { ShelfPrice = 43.57m, isImported = false, isExempted = false };
+            decimal shelfPrice = 43.57m; bool isImported = false; bool isExempted = false;
             decimal expected = 4.35m;
-            decimal actual = Evaluaters.CalculateTaxForItem(sampleItem);
+            Evaluater evaluater = new Evaluater();
+            decimal actual = evaluater.CalculateTaxForItem(shelfPrice, isImported, isExempted);
             Assert.AreEqual(expected, actual, "The actual calculated tax and expected tax are not equal");
         }
         [TestMethod]
         public void CalculateTaxTest5()
         {
-            Item sampleItem = new Item() { ShelfPrice = -43.57m, isImported = false, isExempted = false };
-            Assert.ThrowsException<ShelfPriceNegetiveException>(() => Evaluaters.CalculateTaxForItem(sampleItem),"Exception for negetive shelf price was not thrown");
+            decimal shelfPrice = -43.57m; bool isImported = false; bool isExempted = false;
+            Evaluater evaluater = new Evaluater();
+            Assert.ThrowsException<ShelfPriceNegetiveException>(() => evaluater.CalculateTaxForItem(shelfPrice,isImported,isExempted),"Exception for negetive shelf price was not thrown");
         }
     }
 }

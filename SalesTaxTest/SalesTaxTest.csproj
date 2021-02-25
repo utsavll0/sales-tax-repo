@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FormattersTests\**" />
+    <EmbeddedResource Remove="FormattersTests\**" />
+    <None Remove="FormattersTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
     <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
@@ -16,10 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SalesTaxProject\SalesTaxProject.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="FormattersTests\" />
   </ItemGroup>
 
 </Project>
