@@ -14,27 +14,27 @@ namespace SalesTaxProject
             Console.WriteLine("Welcome to reciept generator!!! Please enter the number of items which were bought...");
             int numOfItems = Int32.Parse(Console.ReadLine());
             Console.WriteLine("Enter the items line by line...");
-            List<string> rawListOfitems = Formatters.ReadInput(numOfItems);
+            Receipt receipt = new Receipt();
             try
             {
-                List<Item> finalItems = Evaluaters.ProcessRawItems(rawListOfitems);
-                List<Item> costEvaluatedItems = Evaluaters.EvaluateTaxAndCosts(finalItems);
-                decimal totalTax = Evaluaters.CalculateSalesTax(finalItems);
-                decimal totalCost = Evaluaters.CalculateTotalCost(finalItems);
-                Formatters.PrintReciept(costEvaluatedItems, totalCost, totalTax);
+                for (int i = 0; i < numOfItems; i++)
+                {
+                    string description = Console.ReadLine();
+                    receipt.AddItem(description);
+                }
+                receipt.CreateReceipt();
+                string summary = receipt.GenerateReceipt();
+                Console.WriteLine(summary);
             }
-            catch(CostMissingException exception)
+            catch (CostMissingException exception)
             {
-                Console.WriteLine(exception.ToString());
+                Console.WriteLine(exception.Message);
             }
-            catch(ShelfPriceNegetiveException exception)
+            catch (ShelfPriceNegetiveException exception)
             {
-                Console.WriteLine(exception.ToString());
+                Console.WriteLine(exception.Message);
             }
-            catch(ImportedMissingException exception)
-            {
-                Console.WriteLine(exception.ToString());
-            }
+
         }
     }
 }
